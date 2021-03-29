@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" version="3.9" group="system" method="upgrade">
+	<name>PLG_SYSTEM_CLASS_EXTENSION</name>
+	<creationDate>2021-03-28</creationDate>
+	<author>Pieter-Jan de Vries/Obix webtechniek</author>
+	<authorEmail>pieter@obix.nl</authorEmail>
+	<authorUrl>https://www.obix.nl</authorUrl>
+	<copyright>Copyright © 2020 Obix webtechniek. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<version>1.0.0</version>
+	<description>PLG_SYSTEM_CLASS_EXTENSION_XML_DESCRIPTION</description>
+
+	<!-- Scripts to run on installation -->
+	<scriptfile>script.php</scriptfile>
+
+	<!-- Plugin files -->
+	<files>
+		<filename plugin="classextension">classextension.php</filename>
+		<folder>language</folder>
+	</files>
+
+	<!-- Config parameter
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field
+					name="sample"
+					type="text"
+					default="42"
+					label="PLG_SYSTEM_CLASS_EXTENSION_SAMPLE_LABEL"
+					description="PLG_SYSTEM_CLASS_EXTENSION_SAMPLE_DESCRIPTION"
+				/>
+			</fieldset>
+		</fields>
+	</config>
+ 	-->
+
+	<!-- Update servers
+	<updateservers>
+		<server type="extension" priority="1" name="Class Extension System Plugin">https://www.example.com/plg_class_extension.xml</server>
+	</updateservers>
+	-->
+</extension>
