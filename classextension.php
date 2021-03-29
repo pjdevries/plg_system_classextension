@@ -53,6 +53,8 @@ class plgSystemClassExtension extends CMSPlugin
      */
     private $extensionRootPath = '';
 
+    const EXTENSION = 'ExtensionBase';
+
 	public function __construct(&$subject, $config = array())
 	{
 		parent::__construct($subject, $config);
@@ -152,8 +154,8 @@ class plgSystemClassExtension extends CMSPlugin
         // original class and 'ExtensionBase' appended. The directory path of the
         // copy is the same as the original path relative to the website root,
         // but now relative to the extension root directory.
-        $toBeExtendedClassFile = sprintf("%s/%s/%sExtensionBase.php",
-            $this->extensionRootPath, $classExtensionDir, $className);
+        $toBeExtendedClassFile = sprintf("%s/%s/%s%s.php",
+            $this->extensionRootPath, $classExtensionDir, $className, self::EXTENSION);
 
         // Make original file path absolute.
         $orgiginalClassFile = JPATH_ROOT . '/' . $originalClassFile;
@@ -163,7 +165,7 @@ class plgSystemClassExtension extends CMSPlugin
         if (!file_exists($toBeExtendedClassFile) || filemtime($orgiginalClassFile) > filemtime($toBeExtendedClassFile))
         {
             $orgFileContents = file_get_contents($orgiginalClassFile);
-            $ExtensionBaseContents = str_replace($className, $className . 'ExtensionBase', $orgFileContents);
+            $ExtensionBaseContents = str_replace($className, $className . self::EXTENSION, $orgFileContents);
             file_put_contents($toBeExtendedClassFile, $ExtensionBaseContents);
         }
 
