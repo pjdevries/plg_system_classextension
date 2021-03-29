@@ -46,10 +46,9 @@ To create an override of the core Joomla! content category model, do the followi
 * For each extended class file found, a copy of the original class file is created. The name of that file is the same 
   as the name of the extended class file, but with `ExtensionBase` appended to it. So for the example above, this will 
   result in the file `[web root]/templates/class_extensions/components/com_content/models/ContentModelCategoryExtensionBase`.
-  If a copy already exists, it will only be copied again if the original is newer than the copy.
+  If a copy already exists, it will be refreshed if the original class file is newer than the existing copy.
 * The name of the class in the copied file gets `ExtensionBase` appended to it. 
-* Using `include_once` we first load the copied original class with the derived class name, followed by the extended 
-  class with the name of the original and extending the copied original by its derievd name.
+* Using `include_once` we first load the copied original class and then the extended class.
 * Because the system plugin is the first to load the class, later uses of the same class will access the already loaded 
   class definition.
 
