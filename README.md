@@ -81,3 +81,7 @@ definition and where the original class is copied to.
 
 `route.option`, `route.view` and `route.layout`: the values to compare to the request parameters with the same names, 
 when determining if a route matches.     
+
+## Credits
+
+The idea for this plugin came from an earlier prototype by Herman Peeren.
