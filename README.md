@@ -74,7 +74,8 @@ the moment of this writing, an object contains the following attributes:
 
 `file`: the path of the file containing the class to be extended, relative to the website root.
 
-`route` an optional set of attributes, describing the route to match for the extended class for be effectuated.
+`route` an optional set of attributes, describing the route to match for the extended class for be effectuated. If not 
+present, the extended class is always in effect.
 
 `route.name`: the name of the subdirectory to be added to the default path, when looking for an extended class 
 definition and where the original class is copied to.
