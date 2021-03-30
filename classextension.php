@@ -165,7 +165,11 @@ class plgSystemClassExtension extends CMSPlugin
         if (!file_exists($toBeExtendedClassFile) || filemtime($orgiginalClassFile) > filemtime($toBeExtendedClassFile))
         {
             $orgFileContents = file_get_contents($orgiginalClassFile);
-            $ExtensionBaseContents = str_replace($className, $className . self::EXTENSION, $orgFileContents);
+
+	        static $replacement = '$1' . self::EXTENSION;
+	        $pattern = '/\b(' . $className . ')\b/';
+	        $ExtensionBaseContents = preg_replace($pattern, $replacement, $orgFileContents);
+
             file_put_contents($toBeExtendedClassFile, $ExtensionBaseContents);
         }
 
