@@ -62,23 +62,32 @@ class plgSystemClassExtension extends CMSPlugin
 		$this->extensionRootPath = JPATH_SITE . '/templates/' . $this->app->getTemplate() . '/class_extensions';
 	}
 
+	/**
+	 * Listener for the 'onAfterInitialise' event
+	 *
+	 * @return  void
+	 */
+	public function onAfterInitialise(): void
+	{
+		// Initialise non routed extended (core) classses.
+		$this->extendClasses(false);
+	}
+
     /**
-     * Listener for the 'onAfterInitialise' event
+     * Listener for the 'onAfterRoute' event
      *
      * @return  void
-     *
-     * @since   1.0
      */
     public function onAfterRoute(): void
     {
-        // Initialise extended (core) classses.
-        $this->extendClasses();
+        // Initialise routed extended (core) classses.
+        $this->extendClasses(true);
     }
 
     /**
      * Initialise extended core classes.
      */
-    private function extendClasses(): void
+    private function extendClasses(bool $routed): void
     {
         // File path of the class extension specifications.
         $classExtensionSepecificationFile = $this->extensionRootPath . '/class_extensions.json';
@@ -94,11 +103,14 @@ class plgSystemClassExtension extends CMSPlugin
         // - "file": the path of the file, relative to the website root,
         //           containing the original class definition to be extended.
         // - "class": the name of the original class to be extended.
-        $classExtensions = json_decode(file_get_contents($classExtensionSepecificationFile));
+	    $classExtensions = json_decode(file_get_contents($classExtensionSepecificationFile));
+        $classExtensions = array_filter($classExtensions, function (\stdClass $extensionSpecs) use ($routed) {
+        	return (($routed && isset($extensionSpecs->route)) || (!$routed && !isset($extensionSpecs->route)));
+        });
 
         foreach ($classExtensions as $extensionSpecs)
         {
-            $this->extend($extensionSpecs);
+	        $this->extend($extensionSpecs);
         }
     }
 

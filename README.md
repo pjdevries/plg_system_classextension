@@ -42,17 +42,25 @@ To create an override of the core Joomla! content category model, do the followi
 
 ## How it works
 
-* The `onAfterRoute` handler of the system plugin processes the specifications in the JSON file.
-* For each extended class file found, a copy of the original class file is created. The name of that file is the same 
-  as the name of the extended class file, but with `ExtensionBase` appended to it. So for the example above, this will 
-  result in the file `[web root]/templates/class_extensions/components/com_content/models/ContentModelCategoryExtensionBase`.
-  If a copy already exists, it will be refreshed if the original class file is newer than the existing copy.
-* The name of the class in the copied file gets `ExtensionBase` appended to it. 
-* Using `include_once` we first load the copied original class and then the extended class.
-* Because the system plugin is the first to load the class, later uses of the same class will access the already loaded 
-  class definition.
+* The `onAfterInitialise` handler of the system plugin processes the specifications in the JSON file that don have 
+  spefic routes. The `onAfterRoute` handler processes the specifications that do have specifc routes.
+* For each extended class file found, a copy of the original class file is created. The path of that file is composed as follows:
+    * The directory for the copied file is the base path of the original file, relative to the website root, and 
+      prefixed with `[web root]/templates/class_extensions`
+    * If a route specification exists (see [JSON specifications](#json-spec) below), the name of that route is appended to the new directory. 
+    * The filename of the copy is that of the original class file, but with `ExtensionBase` appended to it. 
+    * So for the example above, this will result in the file 
+      `[web root]/templates/class_extensions/components/com_content/models/ContentModelCategoryExtensionBase`.
+* If a copy already exists and the original class file is newer than the existing copy, the old copy is overwritten with
+  the newer version.
+* The name of the class in the copied file gets `ExtensionBase` appended to it. So for the example above, this wilt in 
+  the `class ContentModelCategoryExtensionBase`.
+* Using `include_once` we first load the copied class with the new name and then the extended class, having the same 
+  name as the original class.
+* Because the system plugin is the first to load the class, later references to the same class will use the already 
+  loaded class definition.
 
-## JSON specification
+## <a id="json-spec">JSON specification</a>
 
 File `[web root]/templates/class_extensions/class_extensions.json` file contains JSON encoded information about core 
 classes to be extended. The file contains an array of objects. Each object describes a single class to be extended. At 
@@ -84,4 +92,4 @@ when determining if a route matches.
 
 ## Credits
 
-The idea for this plugin came from an earlier prototype by Herman Peeren.
+The idea for this plugin came from an earlier prototype by [Herman Peeren](https://github.com/HermanPeeren).
