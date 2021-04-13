@@ -206,7 +206,12 @@ class plgSystemClassExtension extends CMSPlugin
 
         foreach ($routeElements as $element)
         {
-            if (isset($extensionSpecsRoute->{$element}) && !$this->app->input->getCmd($element))
+	        if (!isset($extensionSpecsRoute->{$element}))
+	        {
+	        	continue;
+	        }
+
+            if ($this->app->input->getString($element, '') !== $extensionSpecsRoute->{$element})
             {
                 return false;
             }
