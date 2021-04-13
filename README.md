@@ -42,7 +42,7 @@ To create an override of the core Joomla! content category model, do the followi
 
 ## How it works
 
-* The `onAfterInitialise` handler of the system plugin processes the specifications in the JSON file that don have 
+* The `onAfterInitialise` handler of the system plugin processes the specifications in the JSON file that don't have 
   spefic routes. The `onAfterRoute` handler processes the specifications that do have specifc routes.
 * For each extended class file found, a copy of the original class file is created. The path of that file is composed as follows:
     * The directory for the copied file is the base path of the original file, relative to the website root, and 
@@ -53,18 +53,18 @@ To create an override of the core Joomla! content category model, do the followi
       `[web root]/templates/class_extensions/components/com_content/models/ContentModelCategoryExtensionBase`.
 * If a copy already exists and the original class file is newer than the existing copy, the old copy is overwritten with
   the newer version.
-* The name of the class in the copied file gets `ExtensionBase` appended to it. So for the example above, this wilt in 
-  the `class ContentModelCategoryExtensionBase`.
-* Using `include_once` we first load the copied class with the new name and then the extended class, having the same 
-  name as the original class.
+* The name of the class in the copied file gets `ExtensionBase` appended to it. So for the example above, this wilt 
+  result in `class ContentModelCategoryExtensionBase`.
+* Using `include_once`, the copied class, with the new name, is loaded first, followed by the extended class, having the
+  same name as the original class.
 * Because the system plugin is the first to load the class, later references to the same class will use the already 
   loaded class definition.
 
 ## <a id="json-spec">JSON specification</a>
 
-File `[web root]/templates/class_extensions/class_extensions.json` file contains JSON encoded information about core 
-classes to be extended. The file contains an array of objects. Each object describes a single class to be extended. At 
-the moment of this writing, an object contains the following attributes:
+File `[web root]/templates/class_extensions/class_extensions.json` contains JSON encoded information about the (core) 
+classes to be extended. It contains an array of objects. Each object describes a single class to be extended. At 
+the moment of this writing, an object description contains the following attributes:
    ```
    {
      "class": ...,
