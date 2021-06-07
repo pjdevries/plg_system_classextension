@@ -7,17 +7,19 @@ This system plugin allows for extension of Joomla! core classes.
 This is what you must do after installation and activation of the plugin:
 
 ### Create an extended class file
-* Create a file with the code of your extended class in folder `[web root]/templates/class_extensions`. The name of 
+* Locate the path of the class you want to extend
+* Create the folder `[web root]/templates/<template name>/class_extensions/<path from extended class/`
+* Copy the file with the code of your extended class in folder `[web root]/templates/<template name>/class_extensions/<path from extended class/<class name of file>.php`. The name of 
   that file must be identical to the name of the class you are extending. The path of the file below the before mentioned 
   folder must be the same as the path of the file containing the class to be overridden, relative to the website root.
 * The code in the extended class file must contain a class definition 
-  * with a name  identical to the name of the class you are extending and
+  * with a name identical to the name of the class you are extending and
   * extending a class with that same class name but with `ExtensionBase` appended to it.
 * Add the JSON encoded specifics of the extended class to file `[web root]/templates/class_extensions/class_extensions.json`.
 
 ### Example
 To create an override of the core Joomla! content category model, do the following:
-* Check if folder `[web root]/templates/class_extensions/components/com_content/models` exists and
+* Check if folder `[web root]/templates/<template name>/class_extensions/components/com_content/models` exists and
   create it if it doesn't.
 * In the `.../models` folder, create a file for the extended class, named `ContentModelCategory`.
 * In the extended class file create the following class definition:
@@ -29,7 +31,7 @@ To create an override of the core Joomla! content category model, do the followi
       ...
   }
   ```
-* Assuming the file does not yet exist, create file `[web root]/templates/class_extensions/class_extensions.json`.
+* Assuming the file does not yet exist, create file `[web root]/templates/<template name>/class_extensions/class_extensions.json`.
 * Add the following the the JSON file:
   ```
   [
@@ -50,10 +52,10 @@ To create an override of the core Joomla! content category model, do the followi
     * If a route specification exists (see [JSON specifications](#json-spec) below), the name of that route is appended to the new directory. 
     * The filename of the copy is that of the original class file, but with `ExtensionBase` appended to it. 
     * So for the example above, this will result in the file 
-      `[web root]/templates/class_extensions/components/com_content/models/ContentModelCategoryExtensionBase`.
+      `[web root]/templates/<template name>/class_extensions/components/com_content/models/ContentModelCategoryExtensionBase`.
 * If a copy already exists and the original class file is newer than the existing copy, the old copy is overwritten with
   the newer version.
-* The name of the class in the copied file gets `ExtensionBase` appended to it. So for the example above, this wilt 
+* The name of the class in the copied file gets `ExtensionBase` appended to it. So for the example above, this will 
   result in `class ContentModelCategoryExtensionBase`.
 * Using `include_once`, the copied class, with the new name, is loaded first, followed by the extended class, having the
   same name as the original class.
