@@ -61,6 +61,11 @@ To create an override of the core Joomla! content category model, do the followi
   same name as the original class.
 * Because the system plugin is the first to load the class, later references to the same class will use the already 
   loaded class definition.
+  
+## What doesn't work
+Due to the way Joomla! handles legacy, non namespaced classes, a whole bunch of core classes can not be extended using this
+plugin. Those classes can be found in `.../libraries/classmap.php`. This file is included during the bootstrap phase,
+before any plugin events are triggered.
 
 ## <a id="json-spec">JSON specification</a>
 
@@ -90,7 +95,7 @@ present, the extended class is always in effect.
 definition and where the original class is copied to.
 
 `route.option`, `route.view` and `route.layout`: the values to compare to the request parameters with the same names, 
-when determining if a route matches.     
+when determining if a route matches.  
 
 ## Credits
 
