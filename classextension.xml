@@ -7,7 +7,7 @@
 	<authorUrl>https://www.obix.nl</authorUrl>
 	<copyright>Copyright © 2020 Obix webtechniek. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<version>1.1.1</version>
+	<version>1.2.0</version>
 	<description>PLG_SYSTEM_CLASS_EXTENSION_XML_DESCRIPTION</description>
 
 	<!-- Scripts to run on installation -->
@@ -19,21 +19,32 @@
 		<folder>language</folder>
 	</files>
 
-	<!-- Config parameter
+	<!-- Config parameters -->
 	<config>
 		<fields name="params">
-			<fieldset name="basic">
+			<fieldset name="basic" addrulepath="plugins/system/classextension/rules">
 				<field
-					name="sample"
+					name="extensionRootPath"
 					type="text"
-					default="42"
-					label="PLG_SYSTEM_CLASS_EXTENSION_SAMPLE_LABEL"
-					description="PLG_SYSTEM_CLASS_EXTENSION_SAMPLE_DESCRIPTION"
+					default=""
+					label="PLG_SYSTEM_CLASS_EXTENSION_ROOT_PATH_LABEL"
+					description="PLG_SYSTEM_CLASS_EXTENSION_ROOT_PATH_DESC"
+					validate="validfolderpath"
 				/>
+				<field
+						name="extensionRootPathCreate"
+						type="radio"
+						default="1"
+						label="PLG_SYSTEM_CLASS_EXTENSION_ROOT_PATH_CREATE_LABEL"
+						description="PLG_SYSTEM_CLASS_EXTENSION_ROOT_PATH_CREATE_DESC"
+						class="btn-group btn-group-yesno"
+				>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
 			</fieldset>
 		</fields>
 	</config>
- 	-->
 
 	<!-- Update servers
 	<updateservers>
