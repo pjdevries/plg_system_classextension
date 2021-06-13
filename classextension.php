@@ -162,12 +162,11 @@ class plgSystemClassExtension extends CMSPlugin
             return;
         }
 
-        // The class to be extended is copied to a file with the name of the
-        // original class and 'ExtensionBase' appended. The directory path of the
-        // copy is the same as the original path relative to the website root,
-        // but now relative to the extension root directory.
+        // The class to be extended is copied to a file named after the
+        // original class, but with 'ExtensionBase' appended, in the same
+	    // directory as the original.
         $toBeExtendedClassFile = sprintf("%s/%s/%s%s.php",
-            $this->extensionRootPath, $classExtensionDir, $className, self::EXTENSION);
+	        JPATH_ROOT, $classExtensionDir, $className, self::EXTENSION);
 
         // Make original file path absolute.
         $orgiginalClassFile = JPATH_ROOT . '/' . $originalClassFile;
