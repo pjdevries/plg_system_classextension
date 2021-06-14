@@ -59,7 +59,17 @@ class plgSystemClassExtension extends CMSPlugin
 	{
 		parent::__construct($subject, $config);
 
-		$this->extensionRootPath = JPATH_SITE . '/templates/' . $this->app->getTemplate() . '/class_extensions';
+		// Get extensions folder path from plugin configuration.
+		$this->extensionRootPath = trim($this->params->get('extensionRootPath', ''));
+
+		// Set backward compatible default, if folder path not configured.
+		if ($this->extensionRootPath === '')
+		{
+			$this->extensionRootPath = '/templates/' . $this->app->getTemplate() . '/class_extensions';
+		}
+
+		// Remove amy leading and trailing slashes and prefix with website root.
+		$this->extensionRootPath = JPATH_ROOT . '/'. trim($this->extensionRootPath, '\\/');
 	}
 
 	/**

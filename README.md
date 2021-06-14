@@ -7,21 +7,28 @@ This system plugin allows for extension of Joomla! core classes.
 This is what you must do after installation and activation of the plugin:
 
 ### Create an extended class file
-* Locate the path of the class you want to extend
-* Create the folder `[web root]/templates/<template name>/class_extensions/<path from extended class/`
-* Copy the file with the code of your extended class in folder `[web root]/templates/<template name>/class_extensions/<path from extended class/<class name of file>.php`. The name of 
-  that file must be identical to the name of the class you are extending. The path of the file below the before mentioned 
-  folder must be the same as the path of the file containing the class to be overridden, relative to the website root.
+* Create a folder for your extended class like so:
+  * Assuming the base path of the folder that contains all the _extended classes_ is: `[web root]/<path_to_extended_classes>`.
+  * Assuming the path of the folder that contains _the original class_ you want to extend is: `[web root]/<path_to_original_class>`.
+  * Create the following folder: `[web root]/<path_to_extended_classes>/<path_to_original_class>`.
+* Create a file for your extended class like so:
+  * Assuming the name of the class you are extending is: `SomeClass`.
+  * Create the following file: `[web root]/<path_to_extended_classes>/<path_to_original_class>/SomeClass.php`
 * The code in the extended class file must contain a class definition 
   * with a name identical to the name of the class you are extending and
-  * extending a class with that same class name but with `ExtensionBase` appended to it.
-* Add the JSON encoded specifics of the extended class to file `[web root]/templates/class_extensions/class_extensions.json`.
+  * extending a class with that same class name but with `ExtensionBase` appended to it,
+  * like so: `class SomeClass extends SomeClassExtensionBase`.
+* Add the JSON encoded specifics of the extended class to file `[web root]/<path_to_extended_classes>/class_extensions.json`.
 
 ### Example
+Class extensions are expected in a folder named `class_extensions`. By default that folder is a subfolder of the defult template, but its location can be changed in the plugin settings.
+
+For the example we will assume that protostar is the default template and the `class_extensions` folder is in the default location.
+
 To create an override of the core Joomla! content category model, do the following:
-* Check if folder `[web root]/templates/<template name>/class_extensions/components/com_content/models` exists and
+* Check if folder `[web root]/templates/protostar/class_extensions/components/com_content/models` exists and
   create it if it doesn't.
-* In the `.../models` folder, create a file for the extended class, named `ContentModelCategory`.
+* In the `.../models` folder, create a file for the extended class, named `ContentModelCategory.php`.
 * In the extended class file create the following class definition:
 
   ```
@@ -31,7 +38,7 @@ To create an override of the core Joomla! content category model, do the followi
       ...
   }
   ```
-* Assuming the file does not yet exist, create file `[web root]/templates/<template name>/class_extensions/class_extensions.json`.
+* Assuming the file does not yet exist, create file `[web root]/templates/protostar/class_extensions/class_extensions.json`.
 * Add the following the the JSON file:
   ```
   [
@@ -43,16 +50,15 @@ To create an override of the core Joomla! content category model, do the followi
   ```
 
 ## How it works
-
 * The `onAfterInitialise` handler of the system plugin processes the specifications in the JSON file that don't have 
   spefic routes. The `onAfterRoute` handler processes the specifications that do have specifc routes.
 * For each extended class file found, a copy of the original class file is created. The path of that file is composed as follows:
     * The directory for the copied file is the base path of the original file, relative to the website root, and 
-      prefixed with `[web root]/templates/class_extensions`
+      prefixed with `[web root]/templates/protostar/class_extensions`
     * If a route specification exists (see [JSON specifications](#json-spec) below), the name of that route is appended to the new directory. 
     * The filename of the copy is that of the original class file, but with `ExtensionBase` appended to it. 
     * So for the example above, this will result in the file 
-      `[web root]/templates/<template name>/class_extensions/components/com_content/models/ContentModelCategoryExtensionBase`.
+      `[web root]/templates/protostar/class_extensions/components/com_content/models/ContentModelCategoryExtensionBase`.
 * If a copy already exists and the original class file is newer than the existing copy, the old copy is overwritten with
   the newer version.
 * The name of the class in the copied file gets `ExtensionBase` appended to it. So for the example above, this will 
@@ -64,12 +70,12 @@ To create an override of the core Joomla! content category model, do the followi
   
 ## What doesn't work
 Due to the way Joomla! handles legacy, non namespaced classes, a whole bunch of core classes can not be extended using this
-plugin. Those classes can be found in `.../libraries/classmap.php`. This file is included during the bootstrap phase,
+plugin. Those classes can be found in `[web root]/libraries/classmap.php`. This file is included during the bootstrap phase,
 before any plugin events are triggered.
 
 ## <a id="json-spec">JSON specification</a>
 
-File `[web root]/templates/class_extensions/class_extensions.json` contains JSON encoded information about the (core) 
+File `[web root]/<path_to_extended_classes>/class_extensions.json` contains JSON encoded information about the (core) 
 classes to be extended. It contains an array of objects. Each object describes a single class to be extended. At 
 the moment of this writing, an object description contains the following attributes:
    ```
