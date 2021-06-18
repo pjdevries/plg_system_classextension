@@ -7,7 +7,7 @@
 	<authorUrl>https://www.obix.nl</authorUrl>
 	<copyright>Copyright © 2020 Obix webtechniek. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<version>1.2.0</version>
+	<version>1.2.1</version>
 	<description>PLG_SYSTEM_CLASS_EXTENSION_XML_DESCRIPTION</description>
 
 	<!-- Scripts to run on installation -->
@@ -17,6 +17,7 @@
 	<files>
 		<filename plugin="classextension">classextension.php</filename>
 		<folder>language</folder>
+		<folder>rules</folder>
 	</files>
 
 	<!-- Config parameters -->
