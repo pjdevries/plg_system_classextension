@@ -4,6 +4,7 @@ This system plugin allows the adaptation and extension of
 Joomla! or 3rd party core classes.
 
 ## Rationale
+
 When building websites, many times there is the need for 
 adaptation or extension of core functionality. For instance 
 when a Joomla! list model does not support filtering on a 
@@ -30,12 +31,37 @@ thing we have to do, is create an override for the `getItems()`
 method of the `ContentModelCategory` class, to which we add 
 filtering on the id of the logged in user.     
 
-## What to do
+## Installation and configuration
 
-This is what you must do after installation and activation of 
-the plugin:
+Installation of the plugin is the same as for any other Joomla!
+extension. If it is installed for the first time, as opposed
+to ugraded, it should be activated automatically. Doesn't
+do any harm to check though :)
+
+After the installation, it is important to check the order of 
+all system plugins. This plugin relies on being the first to
+load the classes that are being extended. It must therefore
+be executed before the original classes are loaded by other
+parts of the Joomla! system. Making this plugin the first in
+the execution order, ensures that happens. 
+
+### Configuration
+
+**Class extension folder path**
+
+A path, relative to the website root, of the directory where 
+the plugin expects to find the configuration file and 
+extended classes. Leading and trailing slashes are ignored.
+
+**Create if non existent**
+
+Whether or not to create the extension directory if it 
+doesn't exist yet. 
+
+## What's next
 
 ### Create an extended class file
+
 * Create a folder for your extended class like so:
   * Assuming the base path of the folder that contains all the 
     _extended classes_ is: `[web root]/<path_to_extended_classes>`.
@@ -57,6 +83,7 @@ the plugin:
   file `[web root]/<path_to_extended_classes>/class_extensions.json`.
 
 ### Example
+
 Class extensions are expected in a folder named 
 `class_extensions`. By default that folder is a subfolder of 
 the defult template, but its location can be changed in the plugin settings.
@@ -93,6 +120,7 @@ model, do the following:
   ```
 
 ## How it works
+
 * The `onAfterInitialise` handler of the system plugin 
   processes the specifications in the JSON file that don't 
   have  specific routes. The `onAfterRoute` handler processes 
@@ -121,6 +149,7 @@ model, do the following:
   loaded class definition.
   
 ## What doesn't work
+
 Due to the way Joomla! handles legacy, non namespaced classes, 
 a whole bunch of core classes can not be extended using this
 plugin. Those classes can be found in `[web root]/libraries/classmap.php`. This file is included during the bootstrap phase,
