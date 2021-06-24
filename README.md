@@ -184,8 +184,7 @@ match for the extended class for be effectuated. If not
 present, the extended class is always in effect.
 
 `route.name`: the name of the subdirectory to be added to the 
-default path, when looking for an extended class definition 
-and where the original class is copied to.
+default path, when looking for an extended class definition.
 
 `route.option`, `route.view` and `route.layout`: the values to 
 compare to the request parameters with the same names, 
